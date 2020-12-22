@@ -1,0 +1,6 @@
+error,pageName,uniqueCount
+this is an error,captureConsumerId,4
+another error,captureConsumerId,65
+can't capture,captureConsumerId,33
+test error,captureEsn,18
+hola,captureEsn,38
