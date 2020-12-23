@@ -1,7 +1,7 @@
 import csv
 import pprint
 
-relevantPages = ['captureEsn', 'deviceResults', 'captureConsumerId']
+relevantPages = ['mobileIdCapture', 'creditCheck', 'coverageCheckPortIn', 'deviceResults', 'deviceDetails', 'homeCreditPurchaseOptions', 'deviceProtection', 'planSearchSelection', 'autoPayEbillIntent', 'addOns', 'orderReviewPage', 'captureEsn', 'assentPage', 'paymentOptionsPage', 'readyNowPage', 'createOrderID']
 
 i1 = open('input1.csv')
 i2 = open('input2.csv')
@@ -55,7 +55,18 @@ for row in input2File:
         'journeyCount': row[1]
     }
 
-outputFile.writerow(['pageName', 'journeyCount', 'errorCount'])
+topPages = []
+outputFile.writerow(['Screens in the new connection flow', 'Total Page Count (total of new and upgrade)', 'Error Count (red banner error count)', '% [Error count/Total Page Count]'])
 
-for key in pageInfo.keys():
-    outputFile.writerow([key, pageInfo[key]['journeyCount'], pageInfo[key]['errorCount']])
+for key in relevantPages:
+    outputFile.writerow([key, pageInfo[key]['journeyCount'], pageInfo[key]['errorCount'], (float(pageInfo[key]['errorCount']) / float(pageInfo[key]['journeyCount'])) * 100])
+    topPages.append({
+        'pageName': key,
+        'errorCount': pageInfo[key]['errorCount']
+    })
+
+topPages = sorted((item['errorCount'] for item in topPages), reverse=True)
+pprint.pprint(topPages)
+
+outputFile.writerow([None, None, totalErrors])
+outputFile.writerow([None, None, totalErrors * 0.80])
